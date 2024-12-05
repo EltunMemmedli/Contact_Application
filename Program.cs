@@ -119,7 +119,7 @@ if(int.TryParse(secim, out Secim) && Secim > 0 && Secim < 3)
                                             {
                                                 if (!(Contactnumber == item2.Numbers))
                                                 {
-                                                    Number.AddNumber(ContactID, Contactnumber);
+                                                    Number.AddNumbers(ContactID);
 
                                                     break;
 

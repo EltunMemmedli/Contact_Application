@@ -23,14 +23,43 @@ namespace Contact_Application.Controller
 
         private string connectionString = "Data Source=(local);Database=Contact_Application;Integrated Security=sspi;";
 
-        public void AddNumber(int Contact_ID, string number)
+        public void AddNumbers(int Contact_ID)
         {
-            Number newNumber = new Number(
-                                            number = number,
-                                            Contact_ID = Contact_ID);
+            while (true)
+            {
+                Console.WriteLine("Please enter a phone number (type 'STOP' to finish):");
+                string number = Console.ReadLine();
 
-            businessLogicLayer.CheckNumber(newNumber);
+                // Check if the user wants to stop adding numbers
+                if (number.ToLower() == "stop")
+                {
+                    Console.WriteLine("Number entry stopped.");
+                    break;
+                }
+
+                // Validate the number format
+                if (number.StartsWith("+994") &&
+                    (number.Substring(4, 2) == "50" ||
+                     number.Substring(4, 2) == "55" ||
+                     number.Substring(4, 2) == "51" ||
+                     number.Substring(4, 2) == "77" ||
+                     number.Substring(4, 2) == "70"))
+                {
+                    // Create a new Number object
+                    Number newNumber = new Number(number, Contact_ID);
+
+                    // Process and add the number using the business logic layer
+                    businessLogicLayer.CheckNumber(newNumber);
+
+                    Console.WriteLine($"Number {number} successfully added for Contact ID {Contact_ID}.");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid number. Please ensure it starts with '+994' and follows the correct format.");
+                }
+            }
         }
+
 
         public List<Number> GetNumbers()
         {
